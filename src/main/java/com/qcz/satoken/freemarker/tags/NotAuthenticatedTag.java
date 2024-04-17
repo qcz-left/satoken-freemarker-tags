@@ -1,6 +1,7 @@
 package com.qcz.satoken.freemarker.tags;
 
 import cn.dev33.satoken.stp.StpUtil;
+import com.qcz.satoken.freemarker.tags.utils.SubjectUtils;
 import freemarker.core.Environment;
 import freemarker.log.Logger;
 import freemarker.template.TemplateDirectiveBody;
@@ -14,7 +15,7 @@ public class NotAuthenticatedTag extends SecureTag {
 
     @Override
     public void render(Environment env, Map params, TemplateDirectiveBody body) throws IOException, TemplateException {
-        if (!StpUtil.isLogin()) {
+        if (SubjectUtils.isExpire()) {
             log.debug("Subject does not exist or is not authenticated.  Tag body will be evaluated.");
             renderBody(env, body);
         } else {
